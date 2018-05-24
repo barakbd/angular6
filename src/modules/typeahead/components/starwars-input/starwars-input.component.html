@@ -1,0 +1,30 @@
+<form class="example-form" [formGroup]="_starWarsForm" (ngSubmit)="_onSubmit()">
+  <mat-form-field class="example-full-width">
+
+    <!-- <label class="center-block">Box Folder Name: -->
+    <input type="text " class="form-control" #movieName formControlName="movie_name" matInput [matAutocomplete]="movieResults "
+      placeholder="Start typing... " aria-label="Movie Name">
+    <p>movie_name: {{movie_name | json}}</p>
+    <!-- </label> -->
+
+    <!-- AUTOCOMPLETE -->
+    <mat-autocomplete #movieResults="matAutocomplete">
+      <mat-option *ngFor="let movie of _filteredFilms | async " [value]="movie ">
+        {{ movie }}
+      </mat-option>
+    </mat-autocomplete>
+
+    <!-- ERRORS -->
+    <mat-error *ngIf="movieName.invalid && (_starWarsForm.movieName.dirty || movieName.touched)" class="alert alert-danger ">
+      <mat-error *ngIf="movieName.errors.required ">
+        Name is required.
+      </mat-error>
+      <mat-error *ngIf="movieName.errors.minlength ">
+        Movie Name must be at least 3 characters long.
+      </mat-error>
+    </mat-error>
+  </mat-form-field>
+
+
+
+</form>
